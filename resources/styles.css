@@ -1,0 +1,244 @@
+/**
+ * Custom styles for Reveal.js.
+ */
+
+/* Fonts */
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:300,700;Roboto:700;Fira+Code:400);
+
+/* Override some defaults from the base theme. */
+:root {
+    --r-heading-font: Roboto, 'Source Sans Pro', sans-serif;
+    --r-body-font: 'Roboto Slab', 'Source Sans Pro', sans-serif;
+    --r-heading1-size: 2em;
+    --r-heading1-text-shadow: .01em .01em .01em #000;
+    --r-heading4-size: var(--r-heading3-size);
+    --r-heading-text-transform: none;
+    --r-code-font: 'Fira Code', monospace;
+    --subdued-text-color: #555;
+}
+
+.reveal {
+    font-family: var(--r-body-font);
+    background: url('./background.webp') center center repeat;
+}
+
+/* Special styling for the title slide. */
+.title-slide h1 {
+    margin-bottom: 1em;
+}
+
+.title-slide .byline {
+    font-weight: bold;
+}
+
+.title-slide .byline a {
+    display: block;
+    font-size: .75em;
+    font-weight: 300;
+}
+
+.slides-link {
+    display: block;
+    margin-top: 2em;
+    font-size: .86em;
+}
+
+/* Persistent footer */
+.presentation-footer {
+    --presentation-footer-color: var(--subdued-text-color);
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    padding: 0 5em .5em 1em;
+    font-size: .5em;
+    color: var(--presentation-footer-color);
+    transition: .2s;
+}
+
+.presentation-footer[hidden] {
+    display: none;
+}
+
+.presentation-footer a {
+    display: inline-block;
+}
+
+@media (min-width: 600px) {
+    .presentation-footer {
+        font-size: .65em;
+    }
+}
+
+/* Blockquotes */
+.reveal blockquote {
+    width: 90%;
+    box-shadow: none;
+}
+
+.reveal blockquote::before {
+    content: '\201C';
+    position: absolute;
+    top: .5em;
+    left: -.3em;
+    font-family: Georgia, serif;
+    font-size: 2.25em;
+    line-height: 0;
+    color: var(--r-link-color-dark);
+}
+
+.reveal blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+.reveal blockquote cite {
+    display: block;
+    margin-top: 1em;
+    font-size: .86em;
+}
+
+.reveal blockquote cite:before {
+    content: '—';
+}
+
+/* Add a bit of extra space between top-level list items. */
+.slides section > ol > li + li,
+.slides section > ul > li + li {
+    margin-top: .5em;
+}
+
+/* Allow definition lists to be centered */
+.reveal dl {
+    margin-left: 0;
+    text-align: center;
+}
+
+.reveal dl dd {
+    margin-left: 0;
+}
+
+/* Extra space between elements in a definition list */
+dd + dt {
+    margin-top: 1em;
+}
+
+/* Inline fragment replacements */
+.fragment-replacement .fragment.fade-out.visible,
+.fragment-replacement .fragment.fade-in:not(.visible) {
+    display: none;
+}
+
+.reveal .fragment-replacement .fragment {
+    transition: none;
+}
+
+.reveal .fragment-replacement .hljs:not(:first-child).fragment {
+    position: inherit;
+}
+
+/* Progressively reveal more code */
+.reveal pre.progressive-reveal .hljs {
+    position: inherit !important;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.reveal pre.progressive-reveal .hljs:first-child {
+    padding-top: 1em;
+}
+
+.reveal pre.progressive-reveal .hljs:last-child {
+    padding-bottom: 1em;
+}
+
+/* Add .hide-line-numbers to code blocks in order to hide line numbering. */
+.hide-line-numbers .hljs-ln-numbers {
+    display: none;
+}
+
+/* Hide text that's hidden for the sake of presentation. */
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    word-wrap: normal;
+}
+
+/* Custom <regex-demo> element. */
+regex-demo,
+regex-demo samp,
+regex-demo output {
+    display: block;
+    font-family: var(--r-code--font);
+}
+
+regex-demo {
+    overflow: hidden;
+    margin: var(--r-block-margin);
+    background: var(--r-background-color);
+    border-radius: .25em;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+regex-demo samp,
+regex-demo output {
+    margin: var(--r-heading-margin);
+    padding: .25em .5em;
+}
+
+regex-demo samp {
+    background: #dadada;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+regex-demo samp::before {
+    content: 'pattern:';
+    display: inline-block;
+    margin-right: 1em;
+    padding: .25em;
+    vertical-align: middle;
+    font-size: .4em;
+    color: var(--r-background-color);
+    background: var(--subdued-text-color);
+    border-radius: .25em;
+}
+
+regex-demo output {
+    color: var(--subdued-text-color);
+}
+
+regex-demo mark,
+.regex-format .current-fragment {
+    background: rgba(255, 255, 0, 0.7);
+    border-bottom: .1em inset;
+}
+
+/* Explaining the regex format */
+.reveal .regex-format .fragment {
+    visibility: visible;
+    opacity: 1;
+    transition: none;
+    border-color: var(--subdued-text-color);
+}
+
+/* A simple, cascading overflow: hidden */
+.overflow-hidden,
+.overflow-hidden > * {
+    overflow: hidden !important;
+}
+
+/* Print styles */
+@media print {
+    /* When code highlighting, don't dim anything. */
+    .reveal .hljs.has-highlights tr {
+        opacity: 1!important;
+    }
+}
