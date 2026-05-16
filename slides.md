@@ -86,6 +86,18 @@ There are a bunch of places where regular expressions are invaluable:
 * If you've built a web scraper before, you've likely need to rely on regular expressions to match patterns in content
 * In the Claude source code leak, it was revealed that it uses regular expressions to match phrases like "wtf", "screw this", and "dumbass" to figure out when it needs to act apologetic
 
+----
+
+<!-- .slide: data-hide-footer data-background="resources/regexr-phone-number.png" data-background-size="contain" data-background-position="center center" -->
+
+### Debugging Regular Expressions <!-- .element: class="screen-reader-text" -->
+
+Note:
+
+Before we even get into patterns, I want to draw your attention to regexr.com.
+
+It's linked to from the my slides' README file and I'll bring it up again later, but this website has done more to help me learn about regular expressions than anything else: you can drop in a pattern, text you want to match against, and it does a great job of explaining what each part of the expression is looking for.
+
 ---
 
 ## Basic concepts
@@ -118,7 +130,7 @@ We'll go further into all of these.
 
 Note:
 
-The simplest use of regular expressions is a literal string match: does this string contain the word "wood"?
+The simplest use of regular expressions is a literal string match: does this string contain the word "guitar"?
 
 In these cases, better off using native language functions like `str_contains()`
 
@@ -173,6 +185,10 @@ There are a number of built-in character classes, which are represented by an es
 
 The lowercase version matches in the affirmative, while the uppercase is in the negative, so lowercase "D" matches a digit while uppercase "D" matches anything that _isn't_ a digit.
 
+Word, represented by a "W", matches any alphanumeric characters as well as underscores.
+
+Whitespace, "S", is any whitespace character: spaces, tabs, etc.
+
 Note that there are a couple more (specifically around Unicode classes) that we won't be getting into here.
 
 ----
@@ -210,6 +226,7 @@ Be forewarned that it only matches lower ASCII characters, so accented letters d
 Whitespace, including tabs, newlines, etc.
 
 <regex-demo pattern="/\s/g">Gentlemen,<mark> </mark>this<mark> </mark>is<mark> </mark>democracy<mark> </mark>manifest!</regex-demo>
+<regex-demo pattern="/\S/g" class="fragment"><mark>Gentlemen,</mark> <mark>this</mark> <mark>is</mark> <mark>democracy</mark> <mark>manifest!</mark></regex-demo>
 
 ----
 
@@ -257,7 +274,7 @@ These can also be negated in the same way we just saw, with a caret.
 
 Match (almost) _any_ character:
 
-<regex-demo pattern="/C*O/g">I got in trouble with the <mark>CEO</mark>, <mark>CFO</mark>, <mark>CTO</mark>, and <mark>CIO</mark> for my comments</regex-demo>
+<regex-demo pattern="/C.O/g">I got in trouble with the <mark>CEO</mark>, <mark>CFO</mark>, <mark>CTO</mark>, and <mark>CIO</mark> for my comments</regex-demo>
 
 Note:
 
@@ -281,8 +298,6 @@ As we get further into regular expressions, you'll find that there are a number 
 In this case, we didn't escape the dot in the pattern, so while it *can* match a literal dot character, it can also match any other character, too.
 
 Adding a backslash in our pattern tells the engine that we're looking for a literal dot character.
-
-Speaking of special characters...
 
 ----
 
@@ -376,7 +391,7 @@ Four letter words:
 
 Words with 2–4 letters:
 
-<regex-demo pattern="/\w{2,4}/g"><mark>What</mark> <mark>is</mark> <mark>the</mark> charge? Eating <mark>a</mark> meal? <mark>A</mark> succulent Chinese <mark>meal</mark>?</regex-demo>
+<regex-demo pattern="/\w{2,4}/g"><mark>What</mark> <mark>is</mark> <mark>the</mark> charge? Eating a <mark>meal</mark>? A succulent Chinese <mark>meal</mark>?</regex-demo>
 
 ----
 
@@ -520,8 +535,8 @@ The case-insensitive ("i") flag is probably the most common one you'll see.
 
 #### Mutli-line (`m`)
 
-<regex-demo pattern="/^\*.+/"><mark>* Buy groceries</mark><br>* Pick up prescriptions</regex-demo>
-<regex-demo pattern="/^\*.+/m" class="fragment"><mark>* Buy groceries</mark><br><mark>* Pick up prescriptions</mark></regex-demo>
+<regex-demo pattern="/^\*.+/g"><mark>* Buy groceries</mark><br>* Pick up prescriptions</regex-demo>
+<regex-demo pattern="/^\*.+/gm" class="fragment"><mark>* Buy groceries</mark><br><mark>* Pick up prescriptions</mark></regex-demo>
 
 Note:
 
@@ -535,8 +550,8 @@ Also, note that we had to escape the asterisk: otherwise it would match zero or 
 
 #### Dot-all (`s`)
 
-<regex-demo pattern="/world.+fine/">It's the end of the world as we know it,<br> and I feel fine</regex-demo>
-<regex-demo pattern="/world.+fine/s" class="fragment">It's the end of the <mark>world as we know it,<br> and I feel fine</mark></regex-demo>
+<regex-demo pattern="/world.+fine/">It's the end of the world as we know it,<code style="padding-left: 1em; font-size: .86em; opacity: 0.4">¶</code><br> and I feel fine</regex-demo>
+<regex-demo pattern="/world.+fine/s" class="fragment">It's the end of the <mark>world as we know it,<code style="padding-left: 1em; font-size: .86em; opacity: 0.4">¶</code><br> and I feel fine</mark></regex-demo>
 
 Note:
 
@@ -565,7 +580,7 @@ Note:
 
 Capture groups let us specify portions of a string that we wish to extract. In this case, we're matching any word followed by "has joined".
 
-So not only do we want to match "$name has joined", but also capture the $name portion as part of a capture group. We do this by wrapping the group in parentheses.
+So not only do we want to match "name has joined", but also capture the $name portion as part of a capture group. We do this by wrapping the group in parentheses.
 
 ----
 
@@ -638,7 +653,11 @@ Note:
 
 Parentheses can also be used to group conditions in what is referred to as a "non-capturing group". We indicate this with `?:` after the opening paren.
 
-In this case, we're matching a name and a sport, which starts with either "basket" or "foot" and ends in "ball". However, if we inspect our matches, we won't see a matching group with values "basket" and "foot".
+In this case, we're matching a name and a sport, which starts with either "basket" or "foot" and ends in "ball". However, if we were to inspect our $matches array from something like `preg_match_all()`, we won't see a capture group with values "basket" and "foot".
+
+If it helps, think of non-capturing groups as parentheses like you'd use to group operations together, just with the `?:` at the start.
+
+This is also the first time we're seeing the "pipe" character, which acts as a literal "or". However, it's usefulness is usually limited unless it's within parentheses: in this case, match "basket" *or* "foot", followed by ball.
 
 ---
 
@@ -656,9 +675,11 @@ I'll briefly touch on a few advanced topics, but going much deeper will be an ex
 
 Positive lookahead (`?=`):
 <regex-demo pattern="/\d+(?=\w+)/g">0 <mark>15</mark>px <mark>2</mark>em</regex-demo>
+<!-- .element: class="fragment" -->
 
 Negative lookahead (`?!`):
 <regex-demo pattern="/\d+(?!\w+)/g"><mark>0</mark> 15px 2em</regex-demo>
+<!-- .element: class="fragment" -->
 
 Note:
 
@@ -666,33 +687,43 @@ Regular Expressions' lookaround capabilities allow you to examine the areas befo
 
 Lookahead will look after the match and may discard the match if the lookahead expectations are not met.
 
+In this case, match one or more digits that are immediately followed by at least one word character: we want the numbers with a unit, but don't care about zero.
+
 ----
 
 ### Looking behind
 
 Positive lookbehind (`?<=`):
 <regex-demo pattern="/(?<=\$)\d+/g">He paid $<mark>24</mark> for 3 coffees</regex-demo>
+<!-- .element: class="fragment"-->
 
 Negative lookbehind (`?<!`):
-<regex-demo pattern="/(?<=\$)\d+/g">He paid $2<mark>4</mark> for <mark>3</mark> coffees</regex-demo>
+<regex-demo pattern="/(?<!\$)\d+/g">He paid $2<mark>4</mark> for <mark>3</mark> coffees</regex-demo>
+<!-- .element: class="fragment"-->
 
 Note:
 
 Lookbehinds are very similar, but we put a less-than (`<`) sign after the question marks.
+
+In this case, find one or more digits that are immediately preceded by a dollar sign.
+
+For the negative lookbehind, note that we're capturing the "4" in 24, since that digit is not immediately preceded by a dollar sign.
 
 ----
 
 ### Lazy v Greedy
 
 Greedy (default):
-<regex-demo pattern="/ba(na)+/"><mark>bananananana</mark></regex-demo>
+<regex-demo pattern="/ba(?:na)+/"><mark>bananananana</mark></regex-demo>
+<!-- .element: class="fragment" -->
 
 Lazy:
-<regex-demo pattern="/ba(na)+?/"><mark>bana</mark>nananana</regex-demo>
+<regex-demo pattern="/ba(?:na)+?/"><mark>bana</mark>nananana</regex-demo>
+<!-- .element: class="fragment" -->
 
 Note:
 
-By default, regular expression quantifiers will match as many instances as it can.
+By default, regular expression quantifiers will match as many instances as it can: "Ba" followed by five "na"s
 
 If we add a question mark after the quantifier, this tells the engine to be lazy ("ungreedy"); in this case, stop matching after the first group of "na" in "bananananana".
 
@@ -920,10 +951,13 @@ British sci-fi author Arthur C. Clarke
 
 Note:
 
-If you'd like to explore regular expressions more, I strongly recommend these sites (also linked to from the slides' README file) for interactively exploring regex patterns
+If you'd like to explore regular expressions more, I strongly recommend these sites (also linked to from the slides' README file) for interactively exploring regex patterns.
+
+The top link, regexr.com, is the one I showed a screenshot of earlier, which is super-helpful for debugging.
 
 ---
 
+<!-- .slide: data-hide-footer -->
 ## Thank you!
 
 Steve Grunwell<br>
