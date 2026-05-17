@@ -36,9 +36,9 @@ Steve Grunwell <!-- .element: class="byline" -->
 ### RegEx or RegExp?
 
 ![Dr Cox (John C. McGinnley) from Scrubs pointing to himself and saying "Man not caring", then making a very sarcasticically-apathetic face](resources/man-not-caring.gif)
+<!-- .element: class="fragment" -->
 
-<aside class="notes"><p>Let&#39;s get this out of the way right out of the gate:</p>
-<p>It&#39;s the hottest debate since &quot;gif v jif&quot;: how do we abbreviate and pronounce regular expressions? With the &quot;p&quot; or without? Rej-ex or reg-ex?</p>
+<aside class="notes"><p>Let&#39;s get this out of the way right out of the gate: rej-ex vs reg-ex? With a &quot;P&quot; or without?</p>
 <p>The real answer: nobody cares. I&#39;m going to use &quot;regex&quot; throughout, but know that they all mean the same thing.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### A brief history of RegEx
@@ -53,9 +53,13 @@ Steve Grunwell <!-- .element: class="byline" -->
 <aside class="notes"><p>Far from exhaustive, but a quick history lesson:</p>
 <ul>
 <li>The concept dates back to 1951, when mathematician Stephen Cole Kleene described &quot;regular languages&quot; via his &quot;regular events&quot; mathematical notation</li>
-<li>By 1968, there were two main uses across Unix ecosystem<ul>
+<li>By 1968, there were two main uses across Unix ecosystem<ol>
+<li>Pattern matching in a text editor<ul>
 <li>First implemented in QED, then later ed; this lead to grep (&quot;Global search for Regular Expression and Print matching lines&quot;, or &quot;Global Regular Expression Print&quot;)</li>
 </ul>
+</li>
+<li>Lexical analysis in a compiler</li>
+</ol>
 </li>
 <li>In the 80s, Perl began introducing more powerful features</li>
 <li>Beginning 1997, Philip Hazel developed Perl-Compatible Regular Expressions (PCRE), a flavor that has been adopted by many modern programming languages</li>
@@ -295,9 +299,9 @@ At least one capital letter at the start: <!-- .element: class="fragment" data-f
 </aside></script></section><section data-markdown><script type="text/template">
 #### Zero or one
 
-Words with begin with zero or one capital letter:
+Words that end in zero or one exclamation mark:
 
-<regex-demo pattern="/[A-Z]?[a-z]+/g"><mark>Ready</mark>, <mark>set</mark>, GO!</regex-demo>
+<regex-demo pattern="/\w+!?/g"><mark>One</mark>. <mark>Two!</mark> <mark>THREE!</mark>!!</regex-demo>
 
 <aside class="notes"><p>In this case, we&#39;re looking for words that are either entirely lowercase or start with <em>one</em> capital letter.</p>
 </aside></script></section><section data-markdown><script type="text/template">
@@ -623,7 +627,7 @@ $title = preg_replace('/[^a-z0-9-]/i', '', $title);</code></pre>
 
 ```php
 // Some incomplete regex for an email address
-$pattern = '[a-z0-9-_]@[a-z09-](\.[a-z]{2,})+';
+$pattern = '/[A-Z0-9-_]+@[A-Z0-9-]+\.[A-Z]{2,}/i';
 
 if (!preg_match($pattern, $email)) {
     throw new ValidationException('Invalid email!');
@@ -722,7 +726,9 @@ $pattern = sprintf(
 Steve Grunwell<br>
 <span style="font-size: .75em;">Staff Software Engineer, Mailchimp</span>
 
-[stevegrunwell.com/slides/regex](https://stevegrunwell.com/slides/regex)<!-- .element: class="slides-link" -->
+[stevegrunwell.com/slides/regex](https://stevegrunwell.com/slides/regex)<br>
+[joind.in/talk/1521b](https://joind.in/talk/1521b)
+<!-- .element: class="slides-link" -->
 
 <aside class="notes"><p>REMEMBER TO REPEAT THE QUESTION!!</p>
 </aside></script></section></div>

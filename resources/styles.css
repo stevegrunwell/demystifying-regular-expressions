@@ -10,7 +10,7 @@
     --r-heading-font: Roboto, 'Source Sans Pro', sans-serif;
     --r-body-font: 'Roboto Slab', 'Source Sans Pro', sans-serif;
     --r-heading1-size: 2em;
-    --r-heading1-text-shadow: .01em .01em .01em #000;
+    --r-heading1-text-shadow: none;
     --r-heading4-size: var(--r-heading3-size);
     --r-heading-text-transform: none;
     --r-code-font: 'Fira Code', monospace;
