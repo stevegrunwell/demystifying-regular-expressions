@@ -19,7 +19,7 @@ Regular expressions, at their core, are patterns describing a certain amount of 
 
 ### RegEx or RegExp?
 
-![Dr Cox (John C. McGinnley) from Scrubs pointing to himself and saying "Man not caring", then making a very sarcasticically-apathetic face](resources/man-not-caring.gif)
+![Dr Cox (John C. McGinnley) from Scrubs pointing to himself and saying "Man not caring", then making a very sarcastically-apathetic face](resources/man-not-caring.gif)
 <!-- .element: class="fragment" -->
 
 Note:
@@ -534,7 +534,7 @@ The case-insensitive ("i") flag is probably the most common one you'll see.
 
 ----
 
-#### Mutli-line (`m`)
+#### Multi-line (`m`)
 
 <regex-demo pattern="/^\*.+/g"><mark>* Buy groceries</mark><br>* Pick up prescriptions</regex-demo>
 <regex-demo pattern="/^\*.+/gm" class="fragment"><mark>* Buy groceries</mark><br><mark>* Pick up prescriptions</mark></regex-demo>
