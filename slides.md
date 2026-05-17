@@ -20,12 +20,11 @@ Regular expressions, at their core, are patterns describing a certain amount of 
 ### RegEx or RegExp?
 
 ![Dr Cox (John C. McGinnley) from Scrubs pointing to himself and saying "Man not caring", then making a very sarcasticically-apathetic face](resources/man-not-caring.gif)
+<!-- .element: class="fragment" -->
 
 Note:
 
-Let's get this out of the way right out of the gate:
-
-It's the hottest debate since "gif v jif": how do we abbreviate and pronounce regular expressions? With the "p" or without? Rej-ex or reg-ex?
+Let's get this out of the way right out of the gate: rej-ex vs reg-ex? With a "P" or without?
 
 The real answer: nobody cares. I'm going to use "regex" throughout, but know that they all mean the same thing.
 
@@ -46,7 +45,9 @@ Far from exhaustive, but a quick history lesson:
 
 * The concept dates back to 1951, when mathematician Stephen Cole Kleene described "regular languages" via his "regular events" mathematical notation
 * By 1968, there were two main uses across Unix ecosystem
-    * First implemented in QED, then later ed; this lead to grep ("Global search for Regular Expression and Print matching lines", or "Global Regular Expression Print")
+    1. Pattern matching in a text editor
+        * First implemented in QED, then later ed; this lead to grep ("Global search for Regular Expression and Print matching lines", or "Global Regular Expression Print")
+    2. Lexical analysis in a compiler
 * In the 80s, Perl began introducing more powerful features
 * Beginning 1997, Philip Hazel developed Perl-Compatible Regular Expressions (PCRE), a flavor that has been adopted by many modern programming languages
 
@@ -369,9 +370,9 @@ If we change the asterisk after the character range to a plus sign, that tells t
 
 #### Zero or one
 
-Words with begin with zero or one capital letter:
+Words that end in zero or one exclamation mark:
 
-<regex-demo pattern="/[A-Z]?[a-z]+/g"><mark>Ready</mark>, <mark>set</mark>, GO!</regex-demo>
+<regex-demo pattern="/\w+!?/g"><mark>One</mark>. <mark>Two!</mark> <mark>THREE!</mark>!!</regex-demo>
 
 Note:
 
@@ -828,7 +829,7 @@ Regular expressions are extremely powerful, but sometimes it's easy to forget th
 
 ```php
 // Some incomplete regex for an email address
-$pattern = '[a-z0-9-_]@[a-z09-](\.[a-z]{2,})+';
+$pattern = '/[A-Z0-9-_]+@[A-Z0-9-]+\.[A-Z]{2,}/i';
 
 if (!preg_match($pattern, $email)) {
     throw new ValidationException('Invalid email!');
