@@ -963,7 +963,9 @@ The top link, regexr.com, is the one I showed a screenshot of earlier, which is 
 Steve Grunwell<br>
 <span style="font-size: .75em;">Staff Software Engineer, Mailchimp</span>
 
-[stevegrunwell.com/slides/regex](https://stevegrunwell.com/slides/regex)<!-- .element: class="slides-link" -->
+[stevegrunwell.com/slides/regex](https://stevegrunwell.com/slides/regex)<br>
+[joind.in/talk/1521b](https://joind.in/talk/1521b)
+<!-- .element: class="slides-link" -->
 
 Note:
 

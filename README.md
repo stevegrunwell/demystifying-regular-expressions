@@ -20,4 +20,4 @@ This talk introduces the basic concepts and syntax of RegEx, focusing on the typ
 
 ## Presentation History
 
-* [PHP Tek 2026](https://phptek.io) — May 20, 2026
+* [PHP Tek 2026](https://phptek.io) — May 20, 2026 ([Joind.in](https://joind.in/talk/1521b))
